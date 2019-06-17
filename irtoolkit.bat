@@ -6,7 +6,10 @@ echo off
 cls
 cd %~dp0
 
-echo Incident Response Toolkit (IR Toolkit) v1.0
+echo Incident Response Toolkit (IR Toolkit)
+echo Created by: Gary Kong (g4xyk00)
+echo Version: 1.0
+echo Homepage: www.axcelsec.com
 @echo:
 
 :: To Create Folder
@@ -52,7 +55,6 @@ wmic startup list full > st_wmic_startup_list_full.txt
 echo [+] Generating report for accounts
 net user > ac_net_user.txt
 net localgroup administrators > ac_localgroup.txt
-
 
 :: [LE] Log Entries
 :: User Account Changes
