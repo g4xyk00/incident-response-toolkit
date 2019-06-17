@@ -8,7 +8,7 @@ cd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 1.0
+echo Version: 1.1
 echo Homepage: www.axcelsec.com
 @echo:
 
@@ -24,6 +24,7 @@ cd %folder%
 :: [PS] Processes and Services 
 echo [+] Generating report for processes and services
 tasklist > ps_tasklist.txt
+tasklist /svc > ps_tasklist_svc.txt
 wmic process list full > ps_wmic_process_list_full.txt 
 net start > ps_net_start.txt
 sc query > ps_sc_query.txt
