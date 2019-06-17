@@ -1,4 +1,4 @@
-:: Incident Response Toolkit (IR Toolkit) v1.0
+:: Incident Response Toolkit (IR Toolkit) v1.1
 :: Author: g4xyk00
 :: Tested on Windows 10
 
