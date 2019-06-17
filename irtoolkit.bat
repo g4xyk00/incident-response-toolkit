@@ -16,7 +16,8 @@ echo Homepage: www.axcelsec.com
 For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set sysdate=%%c%%a%%b)
 For /f "tokens=1-2 delims=: " %%a in ('time /t') do (set systime=%%a%%b)
 For /f "tokens=2 delims= " %%a in ('time /t') do (set sysampm=%%a)
-set folder=%sysdate%_%sysampm%_%systime%
+For /f "tokens=3 delims=: " %%a in ('echo %time%') do (set syssecond=%%a)
+set folder=%sysdate%_%sysampm%_%systime%_%syssecond%
 mkdir %folder%
 cd %folder%
 
@@ -130,4 +131,7 @@ wevtutil qe security /f:text /q:*[System[(EventID=4801)]] > le_logon_session_480
 wevtutil qe security /f:text /q:*[System[(EventID=4802)]] > le_logon_session_4802.txt
 wevtutil qe security /f:text /q:*[System[(EventID=4803)]] > le_logon_session_4803.txt
 
-echo [+] Reports are generated 
+@echo:
+@echo:
+echo [+] Reports are generated at %~dp0%folder%
+pause
