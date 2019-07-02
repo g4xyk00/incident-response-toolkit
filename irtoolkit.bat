@@ -1,4 +1,4 @@
-:: Incident Response Toolkit (IR Toolkit) v1.3
+:: Incident Response Toolkit (IR Toolkit) v1.4
 :: Author: g4xyk00
 :: Tested on Windows 10
 
@@ -8,7 +8,7 @@ cd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 1.3
+echo Version: 1.4
 echo Homepage: www.axcelsec.com
 @echo:
 
@@ -36,8 +36,8 @@ sc query > ps_sc_query.txt
 
 :: [FR] Files and Registry Keys
 echo [+] Generating report for files and registry keys
-dir c:\ > fr_dir_c.txt
-dir %SystemRoot%\system32 > fr_dir_systemroot.txt
+dir /A /Q c:\ > fr_dir_c.txt
+dir %SystemRoot%\system32 /Q > fr_dir_systemroot.txt
 reg query HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run > fr_reg_query_HKLM_run.txt
 reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > fr_reg_query_HKCU_run.txt
 reg query HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce > fr_reg_query_HKLM_RunOnce.txt
