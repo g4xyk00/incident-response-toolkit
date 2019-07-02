@@ -1,4 +1,4 @@
-:: Incident Response Toolkit (IR Toolkit) v1.2
+:: Incident Response Toolkit (IR Toolkit) v1.3
 :: Author: g4xyk00
 :: Tested on Windows 10
 
@@ -8,7 +8,7 @@ cd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 1.2
+echo Version: 1.3
 echo Homepage: www.axcelsec.com
 @echo:
 
@@ -24,6 +24,7 @@ cd %folder%
 :: [SI] System information
 echo [+] Generating report for system information
 systeminfo > si_systeminfo.txt
+ipconfig /all > si_ipconfig.txt
 
 :: [PS] Processes and Services 
 echo [+] Generating report for processes and services
