@@ -11,5 +11,5 @@ Right click *irtoolkit.bat* and *Run as administrator*.
 
 
 ## Report Filtering
-### To list logon information
-```type le_logon_session_4624.txt | findstr "Date Type Name Workstation Source" | findstr -v "Log Package originated Microsoft-Windows-Security-Auditing User"```
+### To list Windows logon information
+> type le_logon_session_4624.txt | findstr "Date Type Name Workstation Source" | findstr -v "Log Package originated Microsoft-Windows-Security-Auditing User"
