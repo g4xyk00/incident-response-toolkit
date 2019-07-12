@@ -1,4 +1,4 @@
-:: Incident Response Toolkit (IR Toolkit) v1.4
+:: Incident Response Toolkit (IR Toolkit) v1.5
 :: Author: g4xyk00
 :: Tested on Windows 10
 
@@ -8,7 +8,7 @@ cd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 1.4
+echo Version: 1.5
 echo Homepage: www.axcelsec.com
 @echo:
 
@@ -38,11 +38,52 @@ sc query > ps_sc_query.txt
 echo [+] Generating report for files and registry keys
 dir /A /Q c:\ > fr_dir_c.txt
 dir %SystemRoot%\system32 /Q > fr_dir_systemroot.txt
+
+:: Startup Folder
 reg query HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run > fr_reg_query_HKLM_run.txt
 reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run > fr_reg_query_HKCU_run.txt
 reg query HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce > fr_reg_query_HKLM_RunOnce.txt
 reg query HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce > fr_reg_query_HKCU_RunOnce.txt
 
+:: Folder viewed
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths" > fr_reg_query_explorer_typedpaths.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\BagMRU" /s > fr_reg_query_shell_bagmru.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags" /s > fr_reg_query_shell.txt
+
+:: Foxit Reader 9.0
+reg query "HKEY_CURRENT_USER\Software\Foxit Software\Foxit Reader 9.0\MRU" /s 2>nul > od_mru_pdf.txt
+
+:: Office 2016: 16.0
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Word\Security\Trusted Documents\TrustRecords" 2>nul > od_16_trust_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Excel\Security\Trusted Documents\TrustRecords" 2>nul > od_16_trust_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\PowerPoint\Security\Trusted Documents\TrustRecords" 2>nul > od_16_trust_ppt.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Word\User MRU" /s 2>nul > od_16_mru_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\Excel\User MRU" /s 2>nul > od_16_mru_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\PowerPoint\User MRU" /s 2>nul > od_16_mru_ppt.txt
+
+:: Office 2013: 15.0
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\Word\Security\Trusted Documents\TrustRecords" 2>nul > od_15_trust_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\Excel\Security\Trusted Documents\TrustRecords" 2>nul > od_15_trust_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\PowerPoint\Security\Trusted Documents\TrustRecords" 2>nul > od_15_trust_ppt.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\Word\User MRU" /s 2>nul > od_15_mru_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\Excel\User MRU" /s 2>nul > od_15_mru_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\15.0\PowerPoint\User MRU" /s 2>nul > od_15_mru_ppt.txt
+
+:: Office 2010: 14.0
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\Word\Security\Trusted Documents\TrustRecords" 2>nul > od_14_trust_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\Excel\Security\Trusted Documents\TrustRecords" 2>nul > od_14_trust_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\PowerPoint\Security\Trusted Documents\TrustRecords" 2>nul > od_14_trust_ppt.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\Word\User MRU" /s 2>nul > od_14_mru_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\Excel\User MRU" /s 2>nul > od_14_mru_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\14.0\PowerPoint\User MRU" /s 2>nul > od_14_mru_ppt.txt
+
+:: Office 2007: 12.0
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\Word\Security\Trusted Documents\TrustRecords" 2>nul > od_12_trust_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\Excel\Security\Trusted Documents\TrustRecords" 2>nul > od_12_trust_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\PowerPoint\Security\Trusted Documents\TrustRecords" 2>nul > od_12_trust_ppt.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\Word\User MRU" /s 2>nul > od_12_mru_doc.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\Excel\User MRU" /s 2>nul > od_12_mru_xls.txt
+reg query "HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\PowerPoint\User MRU" /s 2>nul > od_12_mru_ppt.txt
 
 :: [NU] Network Usage 
 echo [+] Generating report for network usage
@@ -136,6 +177,8 @@ wevtutil qe security /f:text /q:*[System[(EventID=4800)]] > le_logon_session_480
 wevtutil qe security /f:text /q:*[System[(EventID=4801)]] > le_logon_session_4801.txt
 wevtutil qe security /f:text /q:*[System[(EventID=4802)]] > le_logon_session_4802.txt
 wevtutil qe security /f:text /q:*[System[(EventID=4803)]] > le_logon_session_4803.txt
+
+
 
 @echo:
 @echo:
