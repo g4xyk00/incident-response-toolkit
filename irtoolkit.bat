@@ -286,8 +286,6 @@ wevtutil qe security /f:text /q:*[System[(EventID=4801)]] > le_logon_session_480
 wevtutil qe security /f:text /q:*[System[(EventID=4802)]] > le_logon_session_4802.txt
 wevtutil qe security /f:text /q:*[System[(EventID=4803)]] > le_logon_session_4803.txt
 
-
-
 @echo:
 @echo:
 echo [+] Reports are generated at %~dp0%folder%
