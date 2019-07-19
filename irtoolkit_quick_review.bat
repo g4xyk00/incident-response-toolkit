@@ -9,7 +9,7 @@ type le_logon_session_4625.txt | findstr /C:"Date" /C:"Source Network Address"
 @echo: 
 @echo: 
 echo [*] Schedule Tasks
-type st_schtasks.txt | findstr /C:"/20
+type st_schtasks.txt | findstr /C:"/20"
 @echo: 
 @echo: 
 echo [*]  User Account Changes
