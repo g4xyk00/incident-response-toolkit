@@ -1,14 +1,14 @@
-:: Incident Response Toolkit (IR Toolkit) v2.0
+:: Incident Response Toolkit (IR Toolkit) v2.0.1
 :: Author: g4xyk00
 :: Tested on Windows 10
 
 echo off
 cls
-cd %~dp0
+pushd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 2.0
+echo Version: 2.0.1
 echo Homepage: www.axcelsec.com
 @echo:
 
