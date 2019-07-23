@@ -168,59 +168,128 @@ echo ^</table^>  >> %report%
 echo ^</div^>  >> %report%
 echo [*] Logon Session
 echo     [*] No Unauthorized Login (Success)
-echo ^<hr/^>^<h3^>No Unauthorized Login (Success) ^</h3^> >> %report%
+echo ^<h3^>No Unauthorized Login (Success) ^</h3^> >> %report%
 echo ^<textarea id="logon_success" style="background-color: #EBECE4;display:none;" ^> >> %report%
 wevtutil qe security /f:text /q:*[System[(EventID=4624)]] > le_logon_session_4624.txt
-type le_logon_session_4624.txt | findstr /C:"Date" /C:"Logon Type" >> %report%
+type le_logon_session_4624.txt | findstr /C:"Date" /C:"Logon Type" /C:"Source Network Address" >> %report%
 echo ^</textarea^> >> %report%
 :: Javascript for Unauthorized Login (Success)
 echo ^<div class="result"^> >> %report%
-echo ^<script^>  >> %report%
-echo var textArea = document.getElementById('logon_success');  >> %report%
-echo var lines  = textArea.value.split("\n");  >> %report%
-echo var datetime; >> %report%
-echo var date; >> %report%
-echo var time; >> %report%
-echo document.write('^<table border=0^>')  >> %report%
-echo for (var i = 0; i ^< lines.length; i++) {  >> %report%
-echo 	if(lines[i].includes("Date")){  >> %report%
-echo 		datetime = lines[i].split('T');  >> %report%
-echo 		date = datetime[0].split(':')[1]; >> %report%
-echo 		dateArray = date.split('-'); >> %report%
-echo 		dateFormatted = parseInt(dateArray[0]+dateArray[1]+dateArray[2]) >> %report%
-echo 		time = datetime[1].split(':'); >> %report%
-echo 		time = time[0]+':'+time[1]; >> %report%
-echo 	}else{  >> %report%
-echo 		if(lines[i].includes("10")){  >> %report%
-echo 			if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){ >> %report%
-echo 				document.write('^<tr^>');  >> %report%
-echo 				document.write('^<td width="120"^>' + date + '^</td^>');  >> %report%
-echo 				document.write('^<td width="120"^>' + time + '^</td^>');  >> %report%
-echo 				document.write('^<td^>' + lines[i] + '^</td^>');  >> %report%
-echo 				document.write('^</tr^>');  >> %report%
-echo 			} >> %report%
-echo 		}  >> %report%
-echo 	}  >> %report%
-echo }  >> %report%
-echo document.write('^</table^>')  >> %report%
-echo ^</script^> >> %report%
+echo ^<script^>   >> %report%
+echo var textArea = document.getElementById('logon_success');   >> %report%
+echo var lines  = textArea.value.split("\n");   >> %report%
+echo var datetime;  >> %report%
+echo var date;  >> %report%
+echo var time;  >> %report%
+echo var remoteDesktop = false; >> %report%
+echo document.write('^<table border=0^>'); >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Date^</th^>'); >> %report%
+echo document.write('^<th^>Time^</th^>'); >> %report%
+echo document.write('^<th^>Source Network Address^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
+echo for (var i = 0; i ^< lines.length; i++) {   >> %report%
+echo 	if(lines[i].includes("Date")){   >> %report%
+echo 		datetime = lines[i].split('T');   >> %report%
+echo 		date = datetime[0].split(':')[1];  >> %report%
+echo 		dateArray = date.split('-');  >> %report%
+echo 		dateFormatted = parseInt(dateArray[0]+dateArray[1]+dateArray[2])  >> %report%
+echo 		time = datetime[1].split(':');  >> %report%
+echo 		time = time[0]+':'+time[1];  >> %report%
+echo 	}else{   >> %report%
+echo 		if(lines[i].includes("10")){ >> %report%
+echo 			remoteDesktop=true; >> %report%
+echo 		} >> %report%
+echo 		if(lines[i].includes("Source Network Address") ^&^& remoteDesktop){ >> %report%
+echo 			if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){  >> %report%
+echo 				document.write('^<tr^>');   >> %report%
+echo 				document.write('^<td width="120"^>' + date + '^</td^>');   >> %report%
+echo 				document.write('^<td width="120"^>' + time + '^</td^>');   >> %report%
+echo 				document.write('^<td^>' + lines[i].split(':')[1] + '^</td^>');   >> %report%
+echo 				document.write('^</tr^>');   >> %report%
+echo 			}  >> %report%
+echo 			remoteDesktop = false; >> %report%
+echo 		} >> %report%
+echo 	}   >> %report%
+echo }   >> %report%
+echo document.write('^</table^>')   >> %report%
+echo ^</script^>  >> %report%
 del le_logon_session_4624.txt
 echo     [*] No Unauthorized Login (Failure)
-echo ^<hr/^>^<h3^>No Unauthorized Login (Failure) ^</h3^> >> %report%
+echo ^<h3^>No Unauthorized Login (Failure) ^</h3^> >> %report%
 wevtutil qe security /f:text /q:*[System[(EventID=4625)]] > le_logon_session_4625.txt
 echo ^<textarea id="logon_failure" style="background-color: #EBECE4;display:none;"^> >> %report%
 type le_logon_session_4625.txt | findstr /C:"Date" /C:"Source Network Address" >> %report%
 echo ^</textarea^> >> %report%
+:: Javascript for Login Failure 
+echo ^<script^>   >> %report%
+echo var textArea = document.getElementById('logon_failure');   >> %report%
+echo var lines  = textArea.value.split("\n");   >> %report%
+echo var datetime;  >> %report%
+echo var date;  >> %report%
+echo var time;  >> %report%
+echo document.write('^<table border=0^>'); >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Date^</th^>'); >> %report%
+echo document.write('^<th^>Time^</th^>'); >> %report%
+echo document.write('^<th^>Source Network Address^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
+echo for (var i = 0; i ^< lines.length; i++) {   >> %report%
+echo 	if(lines[i].includes("Date")){   >> %report%
+echo 		datetime = lines[i].split('T');   >> %report%
+echo 		date = datetime[0].split(':')[1];  >> %report%
+echo 		dateArray = date.split('-');  >> %report%
+echo 		dateFormatted = parseInt(dateArray[0]+dateArray[1]+dateArray[2])  >> %report%
+echo 		time = datetime[1].split(':');  >> %report%
+echo 		time = time[0]+':'+time[1];  >> %report%
+echo 	}else{   >> %report%
+echo 		if(lines[i].includes("Source Network Address")){ >> %report%
+echo 			if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){  >> %report%
+echo 				document.write('^<tr^>');   >> %report%
+echo 				document.write('^<td width="120"^>' + date + '^</td^>');   >> %report%
+echo 				document.write('^<td width="120"^>' + time + '^</td^>');   >> %report%
+echo 				document.write('^<td^>' + lines[i].split(':')[1] + '^</td^>');   >> %report%
+echo 				document.write('^</tr^>');   >> %report%
+echo 			}  >> %report%
+echo 			remoteDesktop = false; >> %report%
+echo 		} >> %report%
+echo 	}   >> %report%
+echo }   >> %report%
+echo document.write('^</table^>')   >> %report%
+echo ^</script^>  >> %report%
 del le_logon_session_4625.txt 
 echo [*] Schedule Tasks
-echo ^<hr/^>^<h3^>Schedule Tasks ^</h3^> >> %report%
+echo ^<h3^>Schedule Tasks ^</h3^> >> %report%
 schtasks > st_schtasks.txt
 echo ^<textarea id="schedule_task" style="background-color: #EBECE4;display:none;"^> >> %report%
 type st_schtasks.txt | findstr /C:"/20" >> %report%
 echo ^</textarea^> >> %report%
 del st_schtasks.txt
+:: Javascript for Schedule Tasks
+echo ^<script^> >> %report%
+echo var textArea = document.getElementById('schedule_task'); >> %report%
+echo var lines  = textArea.value.split("\n"); >> %report%
+echo var date; >> %report%
+echo document.write('^<table border=0^>');>> %report%
+echo document.write('^<tr^>');>> %report%
+echo document.write('^<th^>TaskName^</th^>');>> %report%
+echo document.write('^<th^>Next Run Time ^& Status^</th^>');>> %report%
+echo document.write('^</tr^>');>> %report%
+echo for (var i = 0; i ^< lines.length; i++) { >> %report%
+echo 	var strArray = lines[i].split('/'); >> %report%
+echo 	var task = strArray[0].substring(0,strArray[0].length-1);>> %report%
+echo 	var detail = strArray[0].substring(strArray[0].length-1)+'/'+strArray[1]+'/'+strArray[2];>> %report%
+echo 	if(lines[i].length ^> 0 ^&^& strArray[1] !== undefined){ >> %report%
+echo 		document.write('^<tr^>'); >> %report%
+echo 		document.write('^<td^>^<b^>' + task + '^</b^>^</td^>'); >> %report%
+echo 		document.write('^<td style="color: grey;"^>' + detail + '^</td^>'); >> %report%
+echo 		document.write('^</tr^>'); >> %report%
+echo 	} >> %report%
+echo } >> %report%
+echo document.write('^</table^>') >> %report%
+echo ^</script^> >> %report%
 echo [*] Startup Folder
-echo ^<hr/^>^<h3^>Schedule Tasks (Startup) ^</h3^> >> %report%
+echo ^<h3^>Schedule Tasks (Startup) ^</h3^> >> %report%
 echo ^<textarea id="schedule_startup" style="background-color: #EBECE4;display:none;"^> >> %report%
 reg export HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run fr_reg_query_HKLM_run.reg 2>nul 1>nul 
 type fr_reg_query_HKLM_run.reg | findstr /C:"=" >> %report%
@@ -237,6 +306,10 @@ echo var textArea = document.getElementById('schedule_startup'); >> %report%
 echo var lines  = textArea.value.split("\n"); >> %report%
 echo var date; >> %report%
 echo document.write('^<table border=0^>') >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Name^</th^>'); >> %report%
+echo document.write('^<th^>Data^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) { >> %report%
 echo 	var strArray = lines[i].split('^"='); >> %report%
 echo 	var apps = strArray[0].slice(1); >> %report%
@@ -255,7 +328,7 @@ del fr_reg_query_HKCU_run.reg
 del fr_reg_query_HKLM_RunOnce.reg
 del fr_reg_query_HKCU_RunOnce.reg
 echo [*] User Account Changes
-echo ^<hr/^>^<h3^>User Account Changes ^</h3^> >> %report%
+echo ^<h3^>User Account Changes ^</h3^> >> %report%
 echo ^<textarea id="user_account" style="background-color: #EBECE4;display:none;"^> >> %report%
 net user >> %report%
 echo ^</textarea^> >> %report%
@@ -278,7 +351,7 @@ echo document.write('^</table^>') >> %report%
 echo ^</script^> >> %report%
 echo [*] Processes and Services
 :: Processes and Services (EXE)
-echo ^<hr/^>^<h3^>Processes and Services (EXE) ^</h3^> >> %report%
+echo ^<h3^>Processes and Services (EXE) ^</h3^> >> %report%
 "02 Endpoint_LastActivityView\lastactivityview\LastActivityView.exe" /scomma lastactivityview.txt
 echo ^<textarea id="processes_exe" style="background-color: #EBECE4;display:none;"^> >> %report%
 type lastactivityview.txt | findstr /C:"Run .EXE file" >> %report%
@@ -288,6 +361,12 @@ echo ^<script^> >> %report%
 echo var textArea = document.getElementById('processes_exe'); >> %report%
 echo var lines  = textArea.value.split("\n"); >> %report%
 echo document.write('^<table border=0 style="table-layout:fixed"^>') >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Action Date^</th^>'); >> %report%
+echo document.write('^<th^>Action Time^</th^>'); >> %report%
+echo document.write('^<th^>Filename^</th^>'); >> %report%
+echo document.write('^<th^>Full Path^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) { >> %report%
 echo 	var strArray = lines[i].split(','); >> %report%
 echo 	if(lines[i].length ^> 0 ^&^& strArray[1] !== undefined){ >> %report%
@@ -325,7 +404,7 @@ echo } >> %report%
 echo document.write('^</table^>') >> %report%
 echo ^</script^> >> %report%
 :: Processes and Services (USB)
-echo ^<hr/^>^<h3^>Processes and Services (USB) ^</h3^> >> %report%
+echo ^<h3^>Processes and Services (USB) ^</h3^> >> %report%
 "04_Endpoint_USBDeview\usbdeview\USBDeview.exe" /scomma usbdeview.txt /sort "Last Plug/Unplug Date"
 echo ^<textarea id="processes_usb" style="background-color: #EBECE4;display:none;"^> >> %report%
 type usbdeview.txt | findstr /C:"Mass Storage" >> %report%
@@ -336,6 +415,11 @@ echo ^<script^>  >> %report%
 echo var textArea = document.getElementById('processes_usb');  >> %report%
 echo var lines  = textArea.value.split("\n"); >> %report%
 echo document.write('^<table border=0^>') >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Last Plug/Unplug Date^</th^>'); >> %report%
+echo document.write('^<th^>Last Plug/Unplug Time^</th^>'); >> %report%
+echo document.write('^<th^>Description^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) { >> %report%
 echo 	var strArray = lines[i].split(','); >> %report%
 echo 	if(lines[i].length ^> 0 ^&^& strArray[1] !== undefined){>> %report%
@@ -373,7 +457,7 @@ echo document.write('^</table^>') >> %report%
 echo ^</script^> >> %report%
 echo [*] File and Registry Key
 :: File and Registry Key
-echo ^<hr/^>^<h3^>File and Registry Key ^</h3^> >> %report%
+echo ^<h3^>File and Registry Key ^</h3^> >> %report%
 echo ^<textarea id="file_folder" style="background-color: #EBECE4;display:none;"^> >> %report%
 type lastactivityview.txt | findstr /C:"View Folder in Explorer" /C:"Open file or folder" >> %report%
 echo ^</textarea^> >> %report%
@@ -382,6 +466,11 @@ echo ^<script^>  >> %report%
 echo var textArea = document.getElementById('file_folder');  >> %report%
 echo var lines  = textArea.value.split("\n");  >> %report%
 echo document.write('^<table border=0 style="table-layout:fixed"^>')  >> %report%
+echo document.write('^<tr^>'); >> %report%
+echo document.write('^<th^>Action Date^</th^>'); >> %report%
+echo document.write('^<th^>Action Time^</th^>'); >> %report%
+echo document.write('^<th^>Full Path^</th^>'); >> %report%
+echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) {  >> %report%
 echo 	var strArray = lines[i].split(',');  >> %report%
 echo 	if(lines[i].length ^> 0 ^&^& strArray[1] !== undefined){  >> %report%
@@ -419,6 +508,70 @@ echo document.write('^</table^>')  >> %report%
 echo ^</script^>  >> %report%
 del lastactivityview.txt
 echo ^</div^> >> %report%
+:: Network Usage
+echo ^<h3^>Network Usage ^</h3^> >> %report%
+echo ^<textarea id="network_usage" style="background-color: #EBECE4;display:none;"^> >> %report%
+type "07_Network_CurrPorts\cports\cports.log" | findstr /C:"Added" >> %report%
+echo ^</textarea^> >> %report%
+echo ^<script^> >> %report%
+echo var textArea = document.getElementById('network_usage');   >> %report%
+echo var lines  = textArea.value.split("\n");  >> %report%
+echo document.write('^<table border=0 ^>')  >> %report%
+echo document.write('^<tr^>');  >> %report%
+echo document.write('^<th^>Added Date^</th^>');  >> %report%
+echo document.write('^<th^>Added Time^</th^>');  >> %report%
+echo document.write('^<th^>Remote Address^</th^>');  >> %report%
+echo document.write('^<th^>Process Path^</th^>');  >> %report%
+echo document.write('^</tr^>');  >> %report%
+echo var remoteAddrArray = []; >> %report%
+echo for (var i = 0; i ^< lines.length; i++) {  >> %report%
+echo 	var strArray = lines[i].split(';');  >> %report%
+echo 	if(lines[i].length ^> 0 ^&^& strArray[1] !== undefined){ >> %report%
+echo 		var datetime = strArray[0]; >> %report%
+echo 		var dateTimeArray = datetime.split('Added'); >> %report%
+echo 		var date = dateTimeArray[0].split(' ')[0]; >> %report%
+echo 		var dateArray = date.split('/'); >> %report%
+echo 		if(dateArray != ''){ >> %report%
+echo 			var dateArrayYear = dateArray[2]; >> %report%
+echo 			var dateArrayMonth = dateArray[0]; >> %report%
+echo 			var dateArrayDay = dateArray[1]; >> %report%
+echo 			if(dateArrayDay.length ^< 2){ >> %report%
+echo 				dateArrayDay = '0'+dateArrayDay; >> %report%
+echo 			} >> %report%
+echo 			if(dateArrayMonth.length ^< 2){ >> %report%
+echo 				dateArrayMonth = '0'+dateArrayMonth; >> %report%
+echo 			} >> %report%
+echo 			var dateFormatted = parseInt(dateArrayYear+dateArrayMonth+dateArrayDay); >> %report%
+echo 		} >> %report%
+echo 		var time = dateTimeArray[0].split(' ')[1] + ' '+ dateTimeArray[0].split(' ')[2]; >> %report%
+echo 		if(time.split(':')[0].length ^< 2){  >> %report%
+echo 			time = '0'+time;  >> %report%
+echo 		} >> %report%
+echo 		var remoteAddr = strArray[4]; >> %report%
+echo 		if(!remoteAddrArray.includes(remoteAddr) ^&^& remoteAddr.trim().length ^> 0){ >> %report%
+echo 			remoteAddrArray.push(remoteAddr); >> %report%
+echo 		} >> %report%
+echo 		var processPath = strArray[6]; >> %report%
+echo 		if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){ >> %report%
+echo 			document.write('^<tr^>');  >> %report%
+echo 			document.write('^<td width="120"^>' + dateArrayYear+'-'+dateArrayMonth+'-'+dateArrayDay+ '^</td^>');  >> %report%
+echo 			document.write('^<td width="120" align="center"^>' + time + '^</td^>');  >> %report%
+echo 			document.write('^<td width="120"^>' + remoteAddr + '^</td^>');  >> %report%
+echo 			document.write('^<td style="overflow: hidden; word-wrap: break-word;"^>' + processPath + '^</td^>');  >> %report%
+echo 			document.write('^</tr^>'); >> %report%
+echo 		} >> %report%
+echo 	}  >> %report%
+echo }  >> %report%
+echo document.write('^<div style="background-color: #dedede;border-radius: 15px;padding: 10px;"^>'); >> %report%
+echo document.write('^<b^>Remote Addresses:^</b^>^<br/^>'); >> %report%
+echo document.write('^<ul^>'); >> %report%
+echo for (var i = 0; i ^< remoteAddrArray.length; i++) {  >> %report%
+echo 	document.write('^<li^>'+remoteAddrArray[i]+'^</li^>'); >> %report%
+echo } >> %report%
+echo document.write('^</ul^>'); >> %report%
+echo document.write('^</div^>'); >> %report%
+echo document.write('^<hr/^>'); >> %report%
+echo ^</script^>   >> %report%
 echo ^</body^> >> %report%
 echo ^</html^> >> %report%
 @echo:
