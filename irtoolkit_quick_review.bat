@@ -16,9 +16,10 @@ For /f "tokens=1-2 delims=: " %%a in ('time /t') do (set systime=%%a%%b)
 For /f "tokens=2 delims= " %%a in ('time /t') do (set sysampm=%%a)
 For /f "tokens=3 delims=: " %%a in ('echo %time%') do (set syssecond=%%a)
 set scandate=%sysdate%_%sysampm%_%systime%_%syssecond%
-set report=%scandate%_report.html
 For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set /a currentmonth=%%a)
 pushd %~dp0
+IF NOT EXIST review_report mkdir review_report
+set report=review_report\%scandate%_report.html
 :: Start of HTML
 echo ^<html^> >> %report%
 echo ^<head^> >> %report%
