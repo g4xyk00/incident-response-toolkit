@@ -1,5 +1,5 @@
-# incident-response-toolkit.bat
-Incident Response Toolkit (IRT) is designed for cybersecurity incident handling. 
+# Incident Response Toolkit (IRT): irtoolkit.bat
+*Incident Response Toolkit (IRT)* is designed for cybersecurity incident handling and forensic.
 
 
 ## Usage
@@ -11,8 +11,8 @@ Right click *irtoolkit.bat* and *Run as administrator*.
 
 
 
-# irtoolkit_quick_review.bat
-Incident Response Toolkit (IRT) Quick Review is designed to shorten the time for log review for specific range of dates. 
+# Incident Response Toolkit (IRT) Quick Review: irtoolkit_quick_review.bat
+*Incident Response Toolkit (IRT) Quick Review* is designed to shorten the time for log review for specific range of dates. 
 
 ## Screenshot
 ### Information Gathering and Report Generation
