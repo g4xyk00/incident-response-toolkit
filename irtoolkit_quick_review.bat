@@ -1,13 +1,13 @@
-:: Incident Response Toolkit (IR Toolkit) Quick Log Review v1.0
+:: Incident Response Toolkit (IR Toolkit) Quick Log Review v1.1
 :: Author: g4xyk00
-:: Tested on Windows 10
+:: Tested on Windows 10, Internet Explorer
 
 echo off
 cls
 
 echo IR Toolkit Quick Log Review Reporting System
 echo Created by: Gary Kong (g4xyk00)
-echo Version: 1.0
+echo Version: 1.1
 echo Homepage: www.axcelsec.com
 @echo:
 
@@ -189,7 +189,7 @@ echo document.write('^<th^>Time^</th^>'); >> %report%
 echo document.write('^<th^>Source Network Address^</th^>'); >> %report%
 echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) {   >> %report%
-echo 	if(lines[i].includes("Date")){   >> %report%
+echo 	if(lines[i].indexOf("Date") ^>=0 ){   >> %report%
 echo 		datetime = lines[i].split('T');   >> %report%
 echo 		date = datetime[0].split(':')[1];  >> %report%
 echo 		dateArray = date.split('-');  >> %report%
@@ -197,10 +197,10 @@ echo 		dateFormatted = parseInt(dateArray[0]+dateArray[1]+dateArray[2])  >> %rep
 echo 		time = datetime[1].split(':');  >> %report%
 echo 		time = time[0]+':'+time[1];  >> %report%
 echo 	}else{   >> %report%
-echo 		if(lines[i].includes("10")){ >> %report%
+echo 		if(lines[i].indexOf("10") ^>= 0){ >> %report%
 echo 			remoteDesktop=true; >> %report%
 echo 		} >> %report%
-echo 		if(lines[i].includes("Source Network Address") ^&^& remoteDesktop){ >> %report%
+echo 		if(lines[i].indexOf("Source Network Address") ^>= 0 ^&^& remoteDesktop){ >> %report%
 echo 			if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){  >> %report%
 echo 				document.write('^<tr^>');   >> %report%
 echo 				document.write('^<td width="120"^>' + date + '^</td^>');   >> %report%
@@ -235,7 +235,7 @@ echo document.write('^<th^>Time^</th^>'); >> %report%
 echo document.write('^<th^>Source Network Address^</th^>'); >> %report%
 echo document.write('^</tr^>'); >> %report%
 echo for (var i = 0; i ^< lines.length; i++) {   >> %report%
-echo 	if(lines[i].includes("Date")){   >> %report%
+echo 	if(lines[i].indexOf("Date") ^>= 0 ){   >> %report%
 echo 		datetime = lines[i].split('T');   >> %report%
 echo 		date = datetime[0].split(':')[1];  >> %report%
 echo 		dateArray = date.split('-');  >> %report%
@@ -243,7 +243,7 @@ echo 		dateFormatted = parseInt(dateArray[0]+dateArray[1]+dateArray[2])  >> %rep
 echo 		time = datetime[1].split(':');  >> %report%
 echo 		time = time[0]+':'+time[1];  >> %report%
 echo 	}else{   >> %report%
-echo 		if(lines[i].includes("Source Network Address")){ >> %report%
+echo 		if(lines[i].indexOf("Source Network Address") ^>= 0){ >> %report%
 echo 			if(dateFormatted ^>= getStartDate() ^&^& dateFormatted ^<= getEndDate()){  >> %report%
 echo 				document.write('^<tr^>');   >> %report%
 echo 				document.write('^<td width="120"^>' + date + '^</td^>');   >> %report%
@@ -339,7 +339,7 @@ echo var lines  = textArea.value.split("\n"); >> %report%
 echo document.write('^<table border=0^>') >> %report%
 echo for (var i = 0; i ^< lines.length; i++) { 	>> %report%
 echo 	if(lines[i].length ^> 0){>> %report%
-echo 		if(lines[i].includes('User accounts for') ^|^| lines[i].includes('The command completed') ^|^| lines[i].includes('-----------------')){>> %report%
+echo 		if(lines[i].indexOf('User accounts for') ^>= 0 ^|^| lines[i].indexOf('The command completed') ^>= 0 ^|^| lines[i].indexOf('-----------------') ^>= 0 ){>> %report%
 echo 		}else{ >> %report%
 echo 			document.write('^<tr^>'); >> %report%
 echo 			document.write('^<td^>' + lines[i] + '^</td^>'); >> %report%
@@ -548,7 +548,7 @@ echo 		if(time.split(':')[0].length ^< 2){  >> %report%
 echo 			time = '0'+time;  >> %report%
 echo 		} >> %report%
 echo 		var remoteAddr = strArray[4]; >> %report%
-echo 		if(!remoteAddrArray.includes(remoteAddr) ^&^& remoteAddr.trim().length ^> 0){ >> %report%
+echo 		if(remoteAddrArray.indexOf(remoteAddr) ^< 0 ^&^& remoteAddr.trim().length ^> 0){ >> %report%
 echo 			remoteAddrArray.push(remoteAddr); >> %report%
 echo 		} >> %report%
 echo 		var processPath = strArray[6]; >> %report%
