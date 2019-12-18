@@ -1,5 +1,5 @@
 # Quick Windows Log Review (Powershell)
-*Quick Windows Log Review* is designed to automate log review in following area:1.
+*Quick Windows Log Review* is designed to automate log review in following areas:
 1. Unauthorized Login
 2. Schedule Tasks
 3. Startup
