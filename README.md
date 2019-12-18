@@ -8,6 +8,8 @@ Right click *irtoolkit.bat* and *Run as administrator*.
 # Incident Response Toolkit (IRT) Quick Review: irtoolkit_quick_review.bat
 *Incident Response Toolkit (IRT) Quick Review* is designed to shorten the time for log review for specific range of dates. 
 
+## Screenshot
+
 ![Screenshot](https://1.bp.blogspot.com/-A3ucfFspIqw/XfmfvaTEe7I/AAAAAAAACII/2eSCseEyK_0ba1zLse2HT51ojpKPszvSgCLcBGAsYHQ/s1600/Picture1.png)
 
 ![Screenshot](https://1.bp.blogspot.com/-gy_I7Xq1PVM/Xfmf0ioqQYI/AAAAAAAACIM/MZ_V9ai4upAzCdWD74MePs-gFdwObQ4owCLcBGAsYHQ/s1600/Picture2.png)
