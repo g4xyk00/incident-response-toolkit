@@ -1,5 +1,13 @@
 # Quick Windows Log Review (Powershell)
-*Quick Windows Log Review* is designed to automate log review.
+*Quick Windows Log Review* is designed to automate log review in following area:1.
+1. Unauthorized Login
+2. Schedule Tasks
+3. Startup
+4. User Account Changes
+5. Executed File
+6. Connected USB device
+7. Folder opened
+8. Network usage
 
 
 ## Usage
