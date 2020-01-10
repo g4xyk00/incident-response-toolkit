@@ -28,12 +28,15 @@ cd /var/www/html && find . -mtime -1
 
 Commands | Event ID |  Malicious Action
 ------------ | ------------- | -------------
-` ` | 4625 |  Bruteforce or unauthenticated login attempts
-` ` | 4672 | User logon with high priviliges
-`net user <UserName> <Password> /add` | 4720 | A user account was created
-` ` | 4724 | An attempt was made to reset an account's password
-`net localgroup Administrators <Name> /add` | 4728 | A user was assigned with Administrator rights 
 `msf5 exploit(windows/smb/ms17_010_psexec) > expoit` | 4624 | A user logged on with NULL SID and 0 Keylength from network (Type 3)
+| 4625 |  Bruteforce or unauthenticated login attempts
+| 4672 | User logon with high priviliges
+`net user <UserName> <Password> /add` | 4720 | A user account was created
+| 4724 | An attempt was made to reset an account's password
+`net localgroup Administrators <Name> /add` | 4728 | A user was assigned with Administrator rights 
+| 4768 | Valid user (Check Account and Network Information) request TGT
+| 4769 | Malicious user (Check Account and Network Information) use TGT to access computer service 
+| 4770 | Malicious user (Check Account and Network Information) renew TGT 
 
 
 # Network
