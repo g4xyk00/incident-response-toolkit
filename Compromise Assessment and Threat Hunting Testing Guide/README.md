@@ -5,25 +5,29 @@
 # Web Server
 ## Apache
 ###  Log Analysis
-> cat access.log | grep "<apache_keyword>"
-
-> tail -n 1 access.log 
-
-> less access.log
+```
+cat access.log | grep "<apache_keyword>"
+tail -n 1 access.log 
+less access.log
+```
 
 ### PHP Webshell
 > find . -type f -name "*.php" | xargs egrep -i "(fsockopen|pfsockopen|exec|shell|eval|rot13|base64|passthru|system)"
 
 ### File System Integrity
-> for f in $(ls); do echo $(md5sum $f); done > baseline.txt
-
-> diff baseline.txt compare.txt
-
+```
+for f in $(ls); do echo $(md5sum $f); done > baseline.txt
+diff baseline.txt compare.txt
+```
 ### Web Directory Integrity
 > cd /var/www/html && find . -mtime -1
 
 # Network
-## Wireshark Filter
+## Wireshark
+
+Wireshark > Statistics > Conversations > TCP
+Wireshark > Statistics > Protocol Hierarchy
+
 ### Tunneling
 > tcp contains <apache_keyword>
 
