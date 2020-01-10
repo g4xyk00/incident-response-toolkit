@@ -21,3 +21,7 @@ ICMP
 
 DNS
 > dns.qry.name.len > 15 and !mdns
+
+# Mail Server
+## Outlook 365
+
