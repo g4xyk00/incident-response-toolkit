@@ -6,3 +6,4 @@ b374k
 r57
 c99
 cmd
+echo
