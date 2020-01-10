@@ -5,7 +5,7 @@
 # Web Server
 ## Apache
 ###  Log Analysis
-```
+```bash
 cat access.log | grep "<apache_keyword>"
 tail -n 1 access.log 
 less access.log
