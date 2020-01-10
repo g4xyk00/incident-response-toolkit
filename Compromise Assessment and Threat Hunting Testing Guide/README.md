@@ -1,30 +1,39 @@
-*Compromise Assessment and Threat Hunting Testing Guide* compile the techniques and Indicator of Compromise (IoC) to perform the testing.  
+*Compromise Assessment and Threat Hunting Testing Guide* compile the techniques and Indicator of Compromise (IoC) to perform the testing. 
+
 # EndPoint
-
-
-# Web Server
-## Apache
-###  Log Analysis
+##  Log Analysis
+Apache
 ```bash
 cat access.log | grep "<apache_keyword>"
 tail -n 1 access.log 
 less access.log
 ```
-
-### PHP Webshell
+## Webshell
+PHP
 ```bash
 find . -type f -name "*.php" | xargs egrep -i "(fsockopen|pfsockopen|exec|shell|eval|rot13|base64|passthru|system)"
 ```
-
-### File System Integrity
+## File System Integrity
+Apache
 ```bash
 for f in $(ls); do echo $(md5sum $f); done > baseline.txt
 diff baseline.txt compare.txt
 ```
-### Web Directory Integrity
+## Web Directory Integrity
+Apache
 ```bash
 cd /var/www/html && find . -mtime -1
 ```
+## Windows Event Log
+
+Windows Command | Event ID | Event Description | Malicious Action
+------------ | ------------- | ------------- | -------------
+` ` | 4625 | An account failed to log on | Bruteforce or unauthenticated login attempts
+`net user <UserName> <Password> /add` | 4720 | A user account was created |
+` ` | 4724 | An attempt was made to reset an account's password |
+`net localgroup Administrators <Name> /add` | 4728 | A member was added to a security-enabled global group |
+
+
 
 # Network
 ## Wireshark
