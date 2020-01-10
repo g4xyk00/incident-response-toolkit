@@ -12,15 +12,19 @@ less access.log
 ```
 
 ### PHP Webshell
-> find . -type f -name "*.php" | xargs egrep -i "(fsockopen|pfsockopen|exec|shell|eval|rot13|base64|passthru|system)"
+```bash
+find . -type f -name "*.php" | xargs egrep -i "(fsockopen|pfsockopen|exec|shell|eval|rot13|base64|passthru|system)"
+```
 
 ### File System Integrity
-```
+```bash
 for f in $(ls); do echo $(md5sum $f); done > baseline.txt
 diff baseline.txt compare.txt
 ```
 ### Web Directory Integrity
-> cd /var/www/html && find . -mtime -1
+```bash
+cd /var/www/html && find . -mtime -1
+```
 
 # Network
 ## Wireshark
