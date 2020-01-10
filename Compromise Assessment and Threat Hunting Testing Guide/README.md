@@ -11,7 +11,13 @@
 ### Wireshark
 > tcp contains fsock
 
+
+## Tunneling
+SSH
 > tcp contains SSH-2
 
+ICMP
+> data.len > 63 and icmp
 
-https://github.com/fuzzdb-project/fuzzdb
+DNS
+> dns.qry.name.len > 15 and !mdns
