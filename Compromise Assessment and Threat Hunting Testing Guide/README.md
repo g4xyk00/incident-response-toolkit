@@ -2,7 +2,6 @@
 # EndPoint
 
 
-
 # Web Server
 ## Apache
 ###  Log Analysis
@@ -11,6 +10,9 @@
 > tail -n 1 access.log 
 
 > less access.log
+
+### PHP Webshell
+> find . -type f -name "*.php" | xargs egrep -i "(fsockopen|pfsockopen|exec|shell|eval|rot13|base64|passthru|system)"
 
 ### File System Integrity
 > for f in $(ls); do echo $(md5sum $f); done > baseline.txt
@@ -21,8 +23,9 @@
 > cd /var/www/html && find . -mtime -1
 
 # Network
-### Wireshark
-> tcp contains fsock
+## Wireshark Filter
+### Tunneling
+> tcp contains <apache_keyword>
 
 ## Tunneling
 SSH
