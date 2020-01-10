@@ -1,0 +1,8 @@
+union
+wp-admin
+wp-login
+/etc/passwd
+b374k
+r57
+c99
+cmd
