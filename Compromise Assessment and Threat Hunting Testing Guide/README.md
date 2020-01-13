@@ -1,5 +1,13 @@
 *Compromise Assessment and Threat Hunting Testing Guide* compile the techniques and Indicator of Compromise (IoC) to perform the testing. 
 
+# Indicators of Compromise
+
+* File hash
+* File path
+* Domain name / URL
+* IP address
+
+
 # EndPoint
 ##  Log Analysis
 Apache
