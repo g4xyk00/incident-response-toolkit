@@ -22,6 +22,7 @@ echo [+] Generating report for Running Services (3/4)
 wmic /output:service_run.html service where state="Running" get DisplayName,Description,PathName,StartName /format:htable
 
 echo [+] Generating report for Software (4/4)
-mic /output:software_all.html product get name,version,Installsource,InstallDate,InstallDate2,LocalPackage /format:htable
+wmic /output:software_all.html product get name,version,Installsource,InstallDate,InstallDate2,LocalPackage /format:htable
 
 echo [+] Reports are generated at %~dp0%report%
+pause
