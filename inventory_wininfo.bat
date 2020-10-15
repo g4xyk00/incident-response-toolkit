@@ -12,6 +12,8 @@ set folder=%sysdate%_%hostName%
 mkdir %folder%
 cd %folder%
 
+copy C:\Windows\System32\wbem\en-US\htable.xsl C:\Windows\system32\wbem /Y
+
 echo [+] Generating report for User Account (1/4)
 wmic /output:acc_all.html useraccount get AccountType,Caption,Description,FullName,Disabled /format:htable
 
@@ -23,6 +25,8 @@ wmic /output:service_run.html service where state="Running" get DisplayName,Desc
 
 echo [+] Generating report for Software (4/4)
 wmic /output:software_all.html product get name,version,Installsource,InstallDate,InstallDate2,LocalPackage /format:htable
+
+del C:\Windows\system32\wbem\htable.xsl
 
 echo [+] Reports are generated at %~dp0%report%
 pause
