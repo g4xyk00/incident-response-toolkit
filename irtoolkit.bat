@@ -112,7 +112,6 @@ reg export "HKEY_USERS\%currentSID%\Software\Microsoft\Windows\CurrentVersion\Ex
 echo     [*] Internet Explorer
 reg export "HKEY_USERS\S-1-5-21-1672240292-986862362-1165397131-3900\Software\Microsoft\Internet Explorer\TypedURLs" fr_iexplorer.reg 2>nul 1>nul
 
-
 :: Foxit Reader 9.0
 echo     [*] Foxit Reader
 reg export "HKEY_CURRENT_USER\Software\Foxit Software\Foxit Reader 9.0\MRU" fr_od_mru_pdf.reg 2>nul 1>nul 
