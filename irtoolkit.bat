@@ -1,4 +1,5 @@
-:: Incident Response Toolkit (IR Toolkit) v2.0.1
+:: Incident Response Toolkit (IR Toolkit)
+:: Last Update: 15-Jun-2025
 :: Author: g4xyk00
 :: Tested on Windows 10
 
@@ -7,9 +8,6 @@ cls
 pushd %~dp0
 
 echo Incident Response Toolkit (IR Toolkit)
-echo Created by: Gary Kong (g4xyk00)
-echo Version: 2.0.1
-echo Homepage: www.axcelsec.com
 @echo:
 
 set reportCount=10
@@ -19,7 +17,8 @@ For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set sysdate=%%c%%a%%b)
 For /f "tokens=1-2 delims=: " %%a in ('time /t') do (set systime=%%a%%b)
 For /f "tokens=2 delims= " %%a in ('time /t') do (set sysampm=%%a)
 For /f "tokens=3 delims=: " %%a in ('echo %time%') do (set syssecond=%%a)
-set folder=%sysdate%_%sysampm%_%systime%_%syssecond%
+For /f "tokens=1 delims=\" %%a in ('hostname') do (set hostName=%%a)
+set folder=%sysdate%_%sysampm%_%systime%_%syssecond%_%hostName%_logs
 mkdir %folder%
 cd %folder%
 
@@ -213,6 +212,11 @@ net user > ac_net_user.txt
 net localgroup administrators > ac_localgroup.txt
 
 :: [LE] Log Entries
+:: Export Event Logs
+wevtutil export-log "System" le_event_System.evtx
+wevtutil export-log "Application" le_event_Application.evtx
+wevtutil export-log "Security" le_event_System.evtx
+
 :: User Account Changes
 echo [+] Generating report for user account changes (7/%reportCount%)
 wevtutil qe security /f:text /q:*[System[(EventID=4720)]] > le_user_account_4720.txt
